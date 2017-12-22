@@ -12,7 +12,7 @@ const languageStrings = {
     'en': {
         translation: {
             SKILL_NAME: 'DragonSlayer',
-            HELP_MESSAGE: 'You can say exit to quit skill',
+            HELP_MESSAGE: 'You can say stop to quit skill',
             HELP_REPROMPT: 'What can I help you with?',
             STOP_MESSAGE: 'Goodbye!',
         },
@@ -87,9 +87,8 @@ const handlers = {
         this.emit(':ask', 'Heavy attack executed! ' + yourAttackReport + dragonAttackReport + healthReport() + promptMove(), 'Please say that again?');
     },
     'AMAZON.HelpIntent': function () {
-        const speechOutput = this.t('HELP_MESSAGE');
-        const reprompt = this.t('HELP_MESSAGE');
-        this.emit(':ask', speechOutput, reprompt);
+        this.emit(':ask', "You can say 'heavy attack' to launch a heavy attack with a higher damage but lower accuracy, or\
+            say 'quick attack' to launch a quick attack with a lower damage but a much higher accuracy. Which attack would you like to execute?");
     },
     'AMAZON.CancelIntent': function () {
         this.emit(':tell', this.t('STOP_MESSAGE'));
