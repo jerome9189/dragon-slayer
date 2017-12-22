@@ -87,8 +87,10 @@ const handlers = {
         this.emit(':ask', 'Heavy attack executed! ' + yourAttackReport + dragonAttackReport + healthReport() + promptMove(), 'Please say that again?');
     },
     'AMAZON.HelpIntent': function () {
-        this.emit(':ask', "You can say 'heavy attack' to launch a heavy attack with a higher damage but lower accuracy, or\
-            say 'quick attack' to launch a quick attack with a lower damage but a much higher accuracy. Which attack would you like to execute?");
+        this.emit(':ask', "You can say 'stop' to exit the game. You can say 'heavy attack' to launch a \
+            heavy attack with a higher damage but lower accuracy, or\
+            say 'quick attack' to launch a quick attack with a lower damage but a \
+            much higher accuracy. Which attack would you like to execute?");
     },
     'AMAZON.CancelIntent': function () {
         this.emit(':tell', this.t('STOP_MESSAGE'));
