@@ -41,7 +41,7 @@ const handlers = {
         dragonHealth -= damage;
         if(checkGameOver() == 1) {
             this.emit(':ask', 'Quick attack executed! ' + yourAttackReport + ' Having no health left, the dragon keels over and dies. You win! To play again,\
-            say; new game',this.t('HELP_MESSAGE'));
+            say; new game; or say stop to exit the game',this.t('HELP_MESSAGE'));
         }
         var dragonAttack = attack(20, 0.2);
         var dragonAttackReport = 'The dragon strikes and';
