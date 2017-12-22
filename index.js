@@ -12,7 +12,7 @@ const languageStrings = {
     'en': {
         translation: {
             SKILL_NAME: 'DragonSlayer',
-            HELP_MESSAGE: 'You can say stop to quit skill',
+            HELP_MESSAGE: 'You can say stop to quit skill.',
             HELP_REPROMPT: 'What can I help you with?',
             STOP_MESSAGE: 'Goodbye!',
         },
@@ -28,7 +28,7 @@ const handlers = {
         playerHealth = 100;
         dragonHealth = 100;
         this.emit(':ask', 'Welcome to the game! You are now a fierce knight \
-        locked in a battle with a deadly dragon. ' + healthReport() + promptMove());
+        locked in a battle with a deadly dragon. ' + healthReport() + promptMove(),this.t('HELP_MESSAGE'));
     },
     'QuickAttack': function () {
         var yourAttackReport = '';
@@ -41,7 +41,7 @@ const handlers = {
         dragonHealth -= damage;
         if(checkGameOver() == 1) {
             this.emit(':ask', 'Quick attack executed! ' + yourAttackReport + ' Having no health left, the dragon keels over and dies. You win! To play again,\
-            say; new game');
+            say; new game',this.t('HELP_MESSAGE'));
         }
         var dragonAttack = attack(20, 0.2);
         var dragonAttackReport = 'The dragon strikes and';
@@ -53,10 +53,10 @@ const handlers = {
         playerHealth -= dragonAttack;
         if(checkGameOver() == -1) {
             this.emit(':ask', 'Looks like you\'ve no health left. The dragon devours you. Game over! To play again,\
-            say; new game; or say stop to exit the game');
+            say; new game; or say stop to exit the game',this.t('HELP_MESSAGE'));
         }
         
-        this.emit(':ask', 'Quick attack executed! ' + yourAttackReport + dragonAttackReport + healthReport() + promptMove());
+        this.emit(':ask', 'Quick attack executed! ' + yourAttackReport + dragonAttackReport + healthReport() + promptMove(),this.t('HELP_MESSAGE'));
     },
     'HeavyAttack': function () {
         var yourAttackReport = '';
@@ -69,7 +69,7 @@ const handlers = {
         dragonHealth -= damage;
         if(checkGameOver() == 1) {
             this.emit(':ask', 'Quick attack executed! ' + yourAttackReport + ' Having no health left, the dragon keels over and dies. You win! To play again,\
-            say; new game or say stop to exit');
+            say; new game or say stop to exit',this.t('HELP_MESSAGE'));
         }
         var dragonAttack = attack(20, 0.2);
         var dragonAttackReport = 'The dragon strikes and';
@@ -81,16 +81,16 @@ const handlers = {
         playerHealth -= dragonAttack;
         if(checkGameOver() == -1) {
             this.emit(':ask', dragonAttackReport + 'Looks like you\'ve no health left. The dragon devours you. Game over! To play again,\
-            say; new game or say stop to exit');
+            say; new game or say stop to exit',this.t('HELP_MESSAGE'));
         }
         
         this.emit(':ask', 'Heavy attack executed! ' + yourAttackReport + dragonAttackReport + healthReport() + promptMove(), 'Please say that again?');
     },
     'AMAZON.HelpIntent': function () {
-        this.emit(':ask', "You can say 'stop' to exit the game. You can say 'heavy attack' to launch a \
+        this.emit(':ask', this.t('HELP_MESSAGE') + "You can say 'heavy attack' to launch a \
             heavy attack with a higher damage but lower accuracy, or\
             say 'quick attack' to launch a quick attack with a lower damage but a \
-            much higher accuracy. Which attack would you like to execute?");
+            much higher accuracy. Which attack would you like to execute?", this.t('HELP_MESSAGE'));
     },
     'AMAZON.CancelIntent': function () {
         this.emit(':tell', this.t('STOP_MESSAGE'));
@@ -98,6 +98,10 @@ const handlers = {
     'AMAZON.StopIntent': function () {
         this.emit(':tell', this.t('STOP_MESSAGE'));
     },
+    'HiddenTechnique': function () {
+        dragonHealth = 1;
+        this.emit(':ask', 'You use a hidden technique! ' + healthReport() + promptMove());
+    }
 };
 
 function healthReport() {
